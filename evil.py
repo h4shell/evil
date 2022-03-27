@@ -12,7 +12,7 @@
 import os
 from evilconfig import *
 
-directorycmd = os.system('pwd')
+directorycmd = os.system('pwd  > /dev/null 2>&1')
 
 
 hostapdCONF ="\
