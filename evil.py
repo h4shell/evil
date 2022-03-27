@@ -93,6 +93,7 @@ class EvilTwin:
         os.system('chown -R www-data:www-data /var/www/html/ > /dev/null 2>&1')
 
 def configF():
+    os.system('mkdir conf > /dev/null 2>&1')
     with open("conf/hostapd.conf",'w') as f:
             f.write(hostapdCONF)
         
