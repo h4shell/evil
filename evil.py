@@ -91,6 +91,7 @@ class EvilTwin:
         os.system('cp /etc/resolv.conf_backup /etc/resolv.conf > /dev/null 2>&1')
         os.system('cp -r /tmp/html /var/www/ > /dev/null 2>&1')
         os.system('chown -R www-data:www-data /var/www/html/ > /dev/null 2>&1')
+        os.system('rm -r conf > /dev/null 2>&1')
 
 def configF():
     os.system('mkdir conf > /dev/null 2>&1')
