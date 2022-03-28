@@ -14,8 +14,6 @@ from operator import index
 import os
 from evilconfig import *
 
-directorycmd = os.popen('pwd > /dev/null 2>&1').read
-
 hostapdCONF ="\
 interface=" + wInt + "\n\
 driver=nl80211\n\
