@@ -9,8 +9,6 @@
 #Ubuntu 21.10   Tested - OK
 #KALI 2022.1    Tested - OK
 
-
-from operator import index
 import os
 from evilconfig import *
 import time
