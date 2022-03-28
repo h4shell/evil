@@ -116,4 +116,3 @@ if(__name__ == "__main__"):
     configF()
     configB()
     x = EvilTwin(wInt)
-    os.system('killall python')
