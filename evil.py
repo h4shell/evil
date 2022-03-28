@@ -13,8 +13,7 @@
 from operator import index
 import os
 from evilconfig import *
-
-directorycmd = os.popen('pwd > /dev/null 2>&1').read
+import time
 
 hostapdCONF ="\
 interface=" + wInt + "\n\
@@ -80,7 +79,7 @@ class EvilTwin:
 
         print (">>> Starting hostapd")
         os.system('hostapd conf/hostapd.conf & > /dev/null 2>&1')
-
+        time.sleep(5)
         input ('\n\nPremere un INVIO per uscire...\n\n\n')
         
         print ("restore system....\n")
