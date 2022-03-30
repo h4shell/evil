@@ -6,7 +6,7 @@ usage:
 
 ```
 
-$ git clone https://github.com/h4shell/evi && cd evil &&  chmod +x evil
+$ git clone https://github.com/h4shell/evil.git && cd evil &&  chmod +x evil
 $ ./evil [OPTIONS: -i "interface" -e "Essid" -c "Channel"]
 
 ```
