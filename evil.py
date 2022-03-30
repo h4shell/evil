@@ -12,6 +12,7 @@
 import os
 from evilconfig import *
 import time
+import sys
 
 hostapdCONF ="\
 interface=" + wInt + "\n\
@@ -67,8 +68,6 @@ class Parametri:
                 return self.argv[6], self.argv[4], self.argv[2]                
 
 
-
-class EvilTwin:
 
 
 class EvilTwin:
@@ -146,7 +145,30 @@ def configB():
 
 
 if(__name__ == "__main__"):
+    configuratore = Parametri()
+    wCh,wInt,wSsid = Parametri.menu(configuratore)
+    
+    hostapdCONF ="\
+    interface=" + wInt + "\n\
+    driver=nl80211\n\
+    ssid=" + wSsid +"\n\
+    channel=" + wCh + "\n"
 
+    dnsmasqCONF = "\
+    interface=" + wInt + "\n\
+    domain-needed\n\
+    no-poll\n\
+    bogus-priv\n\
+    dhcp-range=10.0.0.10,10.0.0.250,12h\n\
+    dhcp-option=3,10.0.0.1\n\
+    dhcp-option=6,10.0.0.1\n\
+    no-resolv\n\
+    listen-address=127.0.0.1\n\
+    server=8.8.8.8\n\
+    port = 53\n\
+    address=/#/10.0.0.1\n\
+    address=/www.google.com/10.0.0.1\n"
+    
     configF()
     configB()
     x = EvilTwin(wInt)
