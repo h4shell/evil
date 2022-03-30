@@ -36,6 +36,41 @@ address=/www.google.com/10.0.0.1\n\
 "
 
 
+class Parametri:
+    def __init__(self):
+        self.argv = sys.argv
+
+    def menu(self):
+        if len(self.argv) != 7:
+            print ("\nComando: python3 evil.py [-i][-e][-c]\n\n\
+            -i        Intefaccia di rete utilizzata (es. wlan0)\n\
+            -e        nome ESSID della rete wireless che si vuole creare\n\
+            -c        Canale wireless da utilizzare per l'attacco!!\n")
+            exit()
+        else:
+            if ( (self.argv[1] == '-c') and (self.argv[3] == '-i') and (self.argv[5] == '-e') ):
+                return self.argv[2], self.argv[4], self.argv[6] #channel interface essid
+
+            elif ( (self.argv[1] == '-c') and (self.argv[3] == '-e') and (self.argv[5] == '-i') ):
+                return self.argv[2], self.argv[6], self.argv[4]
+
+            elif ( (self.argv[1] == '-i') and (self.argv[3] == '-e') and (self.argv[5] == '-c') ):
+                return self.argv[6], self.argv[2], self.argv[4]
+
+            elif ( (self.argv[1] == '-i') and (self.argv[3] == '-c') and (self.argv[5] == '-e') ):
+                return self.argv[4], self.argv[2], self.argv[6]
+
+            elif ( (self.argv[1] == '-e') and (self.argv[3] == '-c') and (self.argv[5] == '-i') ):
+                return self.argv[4], self.argv[6], self.argv[2]
+
+            elif ( (self.argv[1] == '-e') and (self.argv[3] == '-i') and (self.argv[5] == '-c') ):
+                return self.argv[6], self.argv[4], self.argv[2]                
+
+
+
+class EvilTwin:
+
+
 class EvilTwin:
 
     def __init__(self,inter):
