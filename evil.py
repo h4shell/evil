@@ -122,7 +122,7 @@ if(__name__ == "__main__"):
     configuratore = Parametri()
     wCh,wInt,wSsid = Parametri.menu(configuratore)
 
-    print (f"Interface: {wInt}\nEssid: {wSsid}\n Channel: {wCh} ")
+#    print (f"Interface: {wInt}\nEssid: {wSsid}\nChannel: {wCh} ")
     
     hostapdCONF ="\
 interface=" + wInt + "\n\
