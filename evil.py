@@ -9,7 +9,6 @@
 #Ubuntu 21.10   Tested - OK
 #KALI 2022.1    Tested - OK
 
-from ast import Param
 import os
 import time
 import sys
@@ -44,11 +43,6 @@ class Parametri:
 
             elif ( (self.argv[1] == '-e') and (self.argv[3] == '-i') and (self.argv[5] == '-c') ):
                 return self.argv[6], self.argv[4], self.argv[2]                
-
-
-
-
-
 
 class EvilTwin:
 
