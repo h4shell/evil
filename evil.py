@@ -1,4 +1,4 @@
-# !/bin/python 3.9.7
+#!/bin/python
 #
 # hostapd 2.9
 # dnsmasq 2.85 
