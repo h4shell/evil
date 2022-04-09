@@ -24,7 +24,7 @@ class Parametri:
             -i        Intefaccia di rete utilizzata (es. wlan0)\n\
             -e        nome ESSID della rete wireless che si vuole creare\n\
             -c        Canale wireless da utilizzare per l'attacco!!\n")
-            exit()
+            pass
         else:
             if ( (self.argv[1] == '-c') and (self.argv[3] == '-i') and (self.argv[5] == '-e') ):
                 return self.argv[2], self.argv[4], self.argv[6] #channel interface essid
@@ -120,8 +120,10 @@ def configB():
 
 if(__name__ == "__main__"):
     configuratore = Parametri()
-    wCh,wInt,wSsid = Parametri.menu(configuratore)
-
+    try:
+         wCh,wInt,wSsid = Parametri.menu(configuratore)
+    except:
+         sys.exit()
 #    print (f"Interface: {wInt}\nEssid: {wSsid}\nChannel: {wCh} ")
     
     hostapdCONF ="\
